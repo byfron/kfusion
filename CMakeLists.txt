@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(kfusion)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_FORCE_INLINES")
 
 find_package(CUDA REQUIRED)
 find_package(TooN REQUIRED)
@@ -19,6 +20,7 @@ include_directories(
 cuda_add_executable(devicequery
 	devicequery.cpp
 	)
+target_link_libraries(devicequery cuda)
 
 set(kfusion_cuda_srcs
 	helpers.cu
@@ -34,6 +36,7 @@ cuda_add_library(kfusion STATIC
 	OPTIONS
 	-O3
 	)
+target_link_libraries(kfusion cuda)
 
 if (GLUT_FOUND)
 
